@@ -1,0 +1,23 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+body{
+    background-color:rgb(226 232 240);
+    font-size: 14px;
+    line-height: 1.285;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+}
+
+.scroll-on-hover {
+    overflow-y: hidden;
+  }
+  
+  .scroll-on-hover:hover {
+    overflow-y: auto;
+  }
