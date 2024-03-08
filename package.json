@@ -97,7 +97,8 @@
   },
   "scripts": {
     "start": "node server/server.js",
-    "heroku-postbuild": "cd admin-dashboard && npm install && npm run build"
+    "heroku-postbuild": "cd admin-dashboard && npm install && npm run build",
+    "heroku-prebuild": "npm install --no-optional"
   },
   "author": "",
   "license": "ISC"
