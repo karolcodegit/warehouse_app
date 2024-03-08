@@ -17,6 +17,10 @@ import {
 } from "../../utils/icons";
 import { motion } from "framer-motion";
 
+import { FaFileExcel } from "react-icons/fa";
+import exportToExcel from "../../utils/exportToExcel";
+import Button from "../Button/Button";
+
 const Table = ({ columns, data }) => {
   const [carriers, setCarriers] = useState([]);
   const [users, setUsers] = useState([]);
@@ -47,7 +51,7 @@ const Table = ({ columns, data }) => {
         sortBy: [{ id: "date", desc: true }], // Add this line
       }, // Pass our hoisted table state
     },
-    
+
     useGlobalFilter,
     useFilters,
     useSortBy,
@@ -75,7 +79,19 @@ const Table = ({ columns, data }) => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
-        <div className="flex justify-between items-center space-x-4 mb-4">
+        <div className="flex justify-between items-center space-x-4">
+          <div></div>
+          <div>
+            <Input
+              icon={SearchIcon}
+              value={state.globalFilter || ""}
+              onChange={(e) => setGlobalFilter(e.target.value)}
+              col
+            />
+          </div>
+        </div>
+
+        <div className="flex justify-between py-5 items-end">
           <div className="flex items-center gap-x-5">
             {columns.map((column) => {
               if (column.accessor === "date") {
@@ -195,14 +211,11 @@ const Table = ({ columns, data }) => {
               return null;
             })}
           </div>
-
-          <div>
-            <Input
-              icon={SearchIcon}
-              value={state.globalFilter || ""}
-              onChange={(e) => setGlobalFilter(e.target.value)}
-              col
-            />
+          <div className="flex items-center"> 
+            <span className="px-3">Export: </span>
+            <Button onClick={() => exportToExcel(data, "filename.xlsx")}>
+              <FaFileExcel />
+            </Button>
           </div>
         </div>
         <div className="overflow-x-auto ">
@@ -213,18 +226,18 @@ const Table = ({ columns, data }) => {
             <thead>
               {headerGroups.map((headerGroup) => (
                 <tr {...headerGroup.getHeaderGroupProps()} className="bg-white">
-                  {headerGroup.headers.map((column) => (
+                  {headerGroup.headers.map((column, i) => (
                     <th
                       {...column.getHeaderProps(column.getSortByToggleProps())}
-                      className="px-6 py-3 font-bold text-left text-xs  text-gray-500 uppercase tracking-wider"
+                      className={`px-6 py-3 font-bold text-center text-xs  text-gray-500 uppercase tracking-wider ${i === headerGroup.headers.length - 1 ? 'flex justify-end' : ''}`}
                     >
                       <div className="flex items-center gap-2 ">
                         {column.render("Header")}
                         {column.isSorted ? (
                           column.isSortedDesc ? (
-                            <SortAscendingIcon className="text-black"/>
+                            <SortAscendingIcon className="text-black" />
                           ) : (
-                            <SortDescendingIcon className="text-black"/>
+                            <SortDescendingIcon className="text-black" />
                           )
                         ) : (
                           ""
@@ -253,11 +266,11 @@ const Table = ({ columns, data }) => {
                   prepareRow(row);
                   return (
                     <tr {...row.getRowProps()}>
-                      {row.cells.map((cell) => (
+                      {row.cells.map((cell, i) => (
                         <td
                           {...cell.getCellProps()}
-                          className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
-                        >
+                          className={`px-6 py-4 whitespace-nowrap text-sm text-gray-500 ${i === row.cells.length - 1 ? 'flex justify-end' : ''}`}
+                          >
                           {cell.render("Cell")}
                         </td>
                       ))}

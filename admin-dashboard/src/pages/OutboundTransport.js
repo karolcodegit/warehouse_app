@@ -91,7 +91,7 @@ const OutboundTransport = () => {
       accessor: "actions",
       Cell: ({ row }) => (
         <div>
-          <button onClick={() => handleEdit(row.original._id)}>Edit</button>
+          <Button type='edit' onClick={() => handleEdit(row.original._id)}>Edit</Button>
         </div>
       ),
     },

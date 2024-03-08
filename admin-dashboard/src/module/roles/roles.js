@@ -6,11 +6,35 @@ import Modal from "../../components/Model/Model";
 import Input from "../../components/Input/Input";
 import api from "../../api";
 import { toast } from "react-toastify";
+import Table from "../../components/Table/Table";
+import iconsTable from "../../styles/iconsTable";
 
 const Roles = () => {
   const { isModalOpen, handleOpenModal, handleCloseModal } = useModal();
   const [roles, setRoles] = useState([]);
   const [newRole, setNewRole] = useState("");
+
+  console.log(roles);
+  const columns = [
+    
+    {
+      Header: "Roles",
+      accessor: "name",
+    },
+    {
+      Header: "Actions",
+      accessor: "actions",
+      Cell: ({ row }) => (
+        <div className="flex gap-3">
+          <Button type='edit' onClick={() => () => handleRemove(row.original._id)} />
+          <Button type='delete' onClick={() => () => handleRemove(row.original._id)} />
+        </div>
+        
+      ),
+    },
+  ];
+
+
 
   useEffect(() => {
     const fetchRoles = async () => {
@@ -65,8 +89,10 @@ const Roles = () => {
         </Button>
       </BarFilter>
 
+      <Table columns={columns} data={roles} />
+
       <div className="overflow-hidden max-w-5xl mx-auto">
-        <ul className="space-y-4">
+        {/* <ul className="space-y-4">
           {roles.map((role) => (
             <li
               key={role._id}
@@ -81,7 +107,7 @@ const Roles = () => {
               </button>
             </li>
           ))}
-        </ul>
+        </ul> */}
         {isModalOpen && (
           <Modal
             handleSave={handleSave}

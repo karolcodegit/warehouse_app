@@ -28,7 +28,11 @@ import InventoryManagement from "./pages/InventoryManagement";
 import BaseConfig from "./pages/Config/BaseConfig";
 import Roles from "./module/roles/roles";
 import ViewTicket from "./pages/Support/ViewTicket";
-
+import withLayout from "./Layout/withLayout";
+import MainLayout from "./Layout/MainLayout";
+import LoginLayout from "./Layout/LoginLayout";
+import renderRoute from "./Layout/withLayout";
+import RenderRoute from "./Layout/withLayout";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -36,7 +40,7 @@ function App() {
   const navigate = useNavigate();
 
   const location = useLocation();
-  const isLoginPage = location.pathname === '/login'; // Zmień '/login' na rzeczywistą ścieżkę do strony logowania
+  const isLoginPage = location.pathname === "/login";
 
   useEffect(() => {
     const user = AuthService.getCurrentUser();
@@ -47,15 +51,15 @@ function App() {
 
   const logoutUser = () => {
     AuthService.logout();
-    console.log(localStorage)
+    console.log(localStorage);
     setCurrentUser(undefined);
-    navigate('/login')
+    navigate("/login");
   };
 
   useEffect(() => {
     axios.interceptors.response.use(
-      response => response,
-      error => {
+      (response) => response,
+      (error) => {
         if (error.response) {
           switch (error.response.status) {
             case 401: // Unauthorized
@@ -66,7 +70,9 @@ function App() {
               toast.error("You don't have permission to perform this action.");
               break;
             case 500: // Internal Server Error
-              toast.error("An error occurred on the server. Please try again later.");
+              toast.error(
+                "An error occurred on the server. Please try again later."
+              );
               break;
             default:
               toast.error("An error occurred. Please try again.");
@@ -77,65 +83,39 @@ function App() {
     );
   }, []);
 
-  const renderRoute = (Component) => currentUser ? <Component /> : <Login />;
-
+  // const renderRoute = (Component, Layout) => {
+  //   return currentUser !== undefined || location.pathname === "/login"
+  //     ? withLayout(Component, Layout)
+  //     : withLayout(Login, LoginLayout);
+  // };
   let element = useRoutes([
-    { path: "/", element: renderRoute(Main) },
-    { path: "/login", element: <Login /> },
-    { path: "/dashboard", element: renderRoute(Dashboard) },
-    { path: "/users", element: renderRoute(Users) },
-    { path: "/transport/outbound", element: renderRoute(OutboundTransport) },
-    { path: "/transport/outbound/:id", element: renderRoute(EditForm) },
-    { path: "/transport/inbound", element: renderRoute(InboundTransport) },
-    { path: "/transport/inbound/:id", element: renderRoute(EditForm) },
-    { path: "/print/label", element: renderRoute(PrintLabel) },
-    { path: "/support/reports", element: renderRoute(Reports) },
-    { path: "/support/statistics", element: renderRoute(SupportStatictics) },
-    { path: "/settings", element: renderRoute(Settings) },
-    { path: "/profile", element: renderRoute(Profile) },
-    { path: "/config",element: renderRoute(ModuleConfig) },
-    { path: '/documentation', element: renderRoute(Documentation)},
-    { path: '/devices', element: renderRoute(Devices)},
-    { path: '/roles', element: renderRoute(Roles)},
-    {path: '/inventoryManagment', element: renderRoute(InventoryManagement)},
-    {path: '/baseConfig', element: renderRoute(BaseConfig)},
-
-    {path: '/ticket', element: renderRoute(ViewTicket)},
-
+    { path: "/", element: <RenderRoute component={Main} layout={MainLayout} /> },
+    { path: "/login", element: <RenderRoute component={Login} layout={LoginLayout} /> },
+    { path: "/dashboard", element: <RenderRoute component={Dashboard} layout={MainLayout} /> },
+    { path: "/users", element: <RenderRoute component={Users} layout={MainLayout} /> },
+    { path: "/transport/outbound", element: <RenderRoute component={OutboundTransport} layout={MainLayout} /> },
+    { path: "/transport/outbound/:id", element: <RenderRoute component={EditForm} layout={MainLayout} /> },
+    { path: "/transport/inbound", element: <RenderRoute component={InboundTransport} layout={MainLayout} /> },
+    { path: "/transport/inbound/:id", element: <RenderRoute component={EditForm} layout={MainLayout} /> },
+    { path: "/print/label", element: <RenderRoute component={PrintLabel} layout={MainLayout} /> },
+    { path: "/support/reports", element: <RenderRoute component={Reports} layout={MainLayout} /> },
+    { path: "/support/statistics", element: <RenderRoute component={SupportStatictics} layout={MainLayout} /> },
+    { path: "/settings", element: <RenderRoute component={Settings} layout={MainLayout} /> },
+    { path: "/profile", element: <RenderRoute component={Profile} layout={MainLayout} /> },
+    { path: "/config", element: <RenderRoute component={ModuleConfig} layout={MainLayout} /> },
+    { path: "/documentation", element: <RenderRoute component={Documentation} layout={MainLayout} /> },
+    { path: "/devices", element: <RenderRoute component={Devices} layout={MainLayout} /> },
+    { path: "/roles", element: <RenderRoute component={Roles} layout={MainLayout} /> },
+    { path: "/inventoryManagment", element: <RenderRoute component={InventoryManagement} layout={MainLayout} /> },
+    { path: "/baseConfig", element: <RenderRoute component={BaseConfig} layout={MainLayout} /> },
+    { path: "/ticket", element: <RenderRoute component={ViewTicket} layout={MainLayout} /> },
     { path: "*", element: <NotFoundPage /> },
   ]);
 
-  
-
   return (
-    <UserContext.Provider value={{ currentUser, setCurrentUser, logoutUser }}>
+    <UserContext.Provider value={{ isSidebarOpen, setIsSidebarOpen,currentUser, setCurrentUser, logoutUser }}>
       <ToastContainer position="top-right" autoClose={3000} />
-      <div className="flex h-screen overflow-hidden">
-        <div>
-          <div
-            className="fixed inset-0 bg-slate-900 bg-opacity-30 z-40  lg:z-auto transition-opacity duration-200 opacity-0 pointer-events-none"
-            aria-hidden="true"
-          ></div>
-          {currentUser && isSidebarOpen && (
-            <Sidebar
-              isSidebarOpen={isSidebarOpen}
-              setIsSidebarOpen={setIsSidebarOpen}
-            />
-          )}
-        </div>
-        <div className="relative flex flex-col w-full flex-1 overflow-y-auto overflow-x-hidden">
-          {currentUser && (
-            <Topbar
-              isSidebarOpen={isSidebarOpen}
-              setIsSidebarOpen={setIsSidebarOpen}
-            />
-          )}
-         <div className={`w-full max-w-9xl mx-auto bg-slate-200 h-full ${!isLoginPage ? 'px-4 sm:px-6 lg:px-8 pt-8 mb-28' : ''}`}>
-            {element}
-          </div>
-          {currentUser && <Footer  isSidebarOpen={isSidebarOpen} />}
-        </div>
-      </div>
+      {element}
     </UserContext.Provider>
   );
 }

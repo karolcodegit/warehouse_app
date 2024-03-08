@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Input from "../Input/Input";
 import InputList from "../InputList/InputList";
-import Select from "../Select/Select";
+import { FieldNumberIcon } from "../../utils/icons";
 
 const Url = ({
   codeType,
@@ -14,12 +14,8 @@ const Url = ({
   const selectCode = [{ title: "QR" }, { title: "Code-128" }];
   const withText = [{ title: "Yes" }, { title: "No" }];
 
-  const handleSelectChange = (e) => {
-    setCodeType(e.target.value);
-  };
-
-  const handleTextShow = () => {
-    setShowText(!showText);
+  const handleTextShow = (value) => {
+    setShowText(value === "Yes");
   };
 
   const handleTextChange = (e) => {
@@ -28,19 +24,22 @@ const Url = ({
 
   return (
     <>
-      {/* <InputList
+      <InputList
         label="Select Code"
+        name="codeType"
         value={codeType}
-        onChange={handleSelectChange}
-        options={selectCode}
-      /> */}
-      <Select
+        onChange={setCodeType}
+        data={selectCode.map((code) => code.title)}
+      />
+      <InputList
         label="With text?"
-        value={showText}
+        name="showText"
+        value={showText ? "Yes" : "No"}
         onChange={handleTextShow}
-        options={withText}
+        data={withText.map((text) => text.title)}
       />
       <Input
+        icon={FieldNumberIcon}
         label="Text"
         type="text"
         placeholder="Text"

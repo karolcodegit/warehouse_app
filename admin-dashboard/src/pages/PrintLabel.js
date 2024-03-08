@@ -2,12 +2,6 @@ import React, { useState } from "react";
 import { IoQrCodeOutline } from "react-icons/io5";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 
-
-
-
-
-
-
 import Box from "../components/Box/Box";
 import Tabs from "../components/Tabs/Tabs";
 import Location from "../components/QrCode/Location";
@@ -18,8 +12,6 @@ import zoneU from "../components/LayoutLabel/zoneU";
 import zoneFH from "../components/LayoutLabel/zoneFH";
 import Label from "../components/LayoutLabel/Label";
 import { printLabel } from "../utils/printLabel";
-
-
 
 const PrintLabel = () => {
   const [zone, setZone] = useState("F1");
@@ -58,7 +50,7 @@ const PrintLabel = () => {
     setCodeType("QR");
     setShowText(true);
     setInputText("");
-  }
+  };
   return (
     <>
       <Box className="items-center md:flex-row flex-col">
@@ -67,7 +59,7 @@ const PrintLabel = () => {
       </Box>
 
       <div className="flex xl:flex-row flex-col gap-3 w-full grow">
-        <Box col className="xl:w-3/5 w-full">
+        <Box col className="xl:w-3/5 w-full  ">
           <Tabs
             tabs={[
               {
@@ -105,7 +97,7 @@ const PrintLabel = () => {
             )}
           </div>
         </Box>
-        <Box className="flex flex-col xl:w-2/5 w-full  items-center justify-between py-10">
+        <Box className="flex flex-col xl:w-2/5 w-full items-center justify-between py-10">
           <Title tag="h2">Preview</Title>
           <div className="w-full flex items-center justify-center">
             {Layout && (
@@ -119,10 +111,10 @@ const PrintLabel = () => {
                 codeType={codeType}
               />
             )}
-            <div className="block absolute w-8 h-8 left-[-23px] top-1/2 transform -translate-y-1/2 z-50">
-              <div className="contents='' absolute w-9 h-9 bg-white z-50 rounded-full border-8 border-gray-200 flex items-center justify-center">
-                <MdOutlineKeyboardArrowRight />
-              </div>
+          </div>
+          <div className="block absolute w-8 h-8 left-[-23px] top-1/2 transform -translate-y-1/2 z-50 ">
+            <div className="contents='' absolute w-9 h-9 bg-white z-50 rounded-full border-8 border-gray-200 flex items-center justify-center">
+              <MdOutlineKeyboardArrowRight />
             </div>
           </div>
           <div className="flex gap-4 mt-4">
@@ -134,15 +126,14 @@ const PrintLabel = () => {
         </Box>
       </div>
 
-      <div className="flex flex-row justify-between space-x-4 p-4">
-        <Button onClick={clearInputs} bg="bg-red-500" textColor="text-white" width="w-1/2">
+      <div className="flex flex-row justify-end space-x-4 p-4">
+        <Button
+          onClick={clearInputs}
+        >
           Clear
         </Button>
         <Button
           onClick={printLabel}
-          bg="bg-green-500"
-          textColor="text-white"
-          width="w-1/2"
         >
           Print
         </Button>

@@ -102,7 +102,10 @@ const Login = (props) => {
       <div className="relative py-12 bg-gray-800 max-h-full h-full items-center justify-center overflow-hidden">
         <div className="container mx-auto px-4 xl:max-w-8xl items-center h-full justify-center ">
           <div className="my-10">
+            <div className="flex items-center justify-center">
             <Logo big col />
+
+            </div>
           </div>
           <div className="flex flex-wrap flex-col xl:flex-row -mx-4 ">
             <div className="flex-shrink max-w-full px-4 w-full xl:w-2/5">

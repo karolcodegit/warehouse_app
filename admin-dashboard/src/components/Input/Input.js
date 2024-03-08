@@ -1,6 +1,6 @@
 import LabelInput from "../LabelInput/LabelInput"
 
-const Input = ({required, label, type, placeholder, onChange, value, name, autoComplete, col, icon: Icon, tag}) => {
+const Input = ({required,maxLength, label, type, placeholder, onChange, value, name, autoComplete, col, icon: Icon, tag}) => {
   const InputTag = tag === 'textarea' ? 'textarea' : 'input';
 
   return (
@@ -10,7 +10,7 @@ const Input = ({required, label, type, placeholder, onChange, value, name, autoC
           <div className="pl-4 flex items-center absolute left-0 top-0 bottom-0">
             {Icon && <Icon className="text-slate-600 w-5 h-5 align-middle block " />}
           </div>
-            <InputTag required={required} autoComplete={autoComplete} name={name} type={type} className={`block w-full py-2 pl-14 pr-5 text-gray-900  text-sm leading-6	${tag === 'textarea' ? 'h-40' : ''}`} placeholder={placeholder} onChange={onChange} value={value}/> 
+            <InputTag maxLength={maxLength} required={required} autoComplete={autoComplete} name={name} type={type} className={`block w-full py-2 pl-14 pr-5 text-gray-900  text-sm leading-6	${tag === 'textarea' ? 'h-40' : ''}`} placeholder={placeholder} onChange={onChange} value={value}/> 
         </div>
     </div>
   )

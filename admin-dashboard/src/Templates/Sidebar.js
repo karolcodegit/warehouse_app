@@ -42,7 +42,7 @@ const Sidebar = () => {
                   <div className="flex items-center">
                     <div className="shrink-0 h-5 w-5">{item.icon}</div>
                     <span
-                      className={`text-base font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200 hover:text-red-400 ${
+                      className={`text-base font-medium ml-3 l 2xl:opacity-100 duration-200 hover:text-red-400 ${
                         location.pathname === item.path ? "text-red-400" : ""
                       }`}
                     >
@@ -77,7 +77,7 @@ const Sidebar = () => {
                           activeclassname="text-red-400"
                         >
                           <span
-                            className={`text-base font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200 ${
+                            className={`text-base font-medium 2xl:opacity-100 duration-200 ${
                               location.pathname === subItem.path
                                 ? "text-red-400"
                                 : ""
