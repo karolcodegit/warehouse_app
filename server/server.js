@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import path from 'path';
 import { connectToDatabase } from "./config/db.js";
 import setupRoutes from "./routes/index.js";
 import companyInfoRoutes from "./routes/companyinfo.routes.js";
@@ -28,9 +29,13 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(express.static(path.join(__dirname, '../admin-dashboard/build'))); // <-- Add this line
+
+
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to the server" });
 });
+
 
 app.use("/api/company-info", companyInfoRoutes);
 app.use("/api/carriers", carrierRouter);
@@ -61,4 +66,9 @@ app.listen(process.env.PORT, () => {
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
+});
+
+
+app.get('*', (req, res) => { 
+  res.sendFile(path.join(__dirname, '../admin-dashboard/build/index.html'));
 });
