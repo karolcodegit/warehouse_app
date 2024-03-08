@@ -1,8 +1,6 @@
 import { useLocation, useNavigate, useRoutes } from "react-router-dom";
 import { useEffect, useState } from "react";
 import AuthService from "./services/auth.service";
-import Sidebar from "./Templates/Sidebar";
-import Topbar from "./Templates/Topbar";
 import Dashboard from "./pages/Dashboard";
 import Users from "./pages/Users";
 import Login from "./pages/Login";
@@ -14,7 +12,6 @@ import UserContext from "./contexts/UserContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Profile from "./pages/Profile";
-import Footer from "./Templates/Footer";
 import Main from "./pages/Main";
 import axios from "axios";
 import EditForm from "./components/EditForm/EditForm";
@@ -28,10 +25,8 @@ import InventoryManagement from "./pages/InventoryManagement";
 import BaseConfig from "./pages/Config/BaseConfig";
 import Roles from "./module/roles/roles";
 import ViewTicket from "./pages/Support/ViewTicket";
-import withLayout from "./Layout/withLayout";
 import MainLayout from "./Layout/MainLayout";
 import LoginLayout from "./Layout/LoginLayout";
-import renderRoute from "./Layout/withLayout";
 import RenderRoute from "./Layout/withLayout";
 
 function App() {
